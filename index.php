@@ -1,49 +1,29 @@
 <?php
 
-require_once 'Product.php';
-require_once 'Shop.php';
-require_once 'ProductStorage.php';
-require_once 'ProductFormatter.php';
-require_once 'Person.php';
-require_once 'PersonStorage.php';
-require_once 'PersonCollection.php';
-require_once 'PersonFormatter.php';
+require_once 'Products/Product.php';
+require_once 'Products/Shop.php';
+require_once 'Products/ProductStorage.php';
+require_once 'Products/ProductFormatter.php';
+
+require_once 'Persons/Person.php';
+require_once 'Persons/PersonCollection.php';
+require_once 'Persons/PersonStorage.php';
+require_once 'Persons/PersonFormatter.php';
+
 require_once 'DrawInformation.php';
 
-$productStorage = new ProductStorage('products.txt');
+require_once 'Shopping.php';
+
+$productStorage = new ProductStorage('./Products/products.txt');
 $shop = new Shop('Narvesen Salaspils', $productStorage->loadProducts());
 
-$personStorage = new PersonStorage('persons.txt');
+$personStorage = new PersonStorage('./Persons/persons.txt');
 $personCollection = new PersonCollection($personStorage->loadPersons());
-
-function shopping(PersonCollection $personCollection, PersonStorage $personStorage, Shop $shop, ProductStorage $productStorage): void
-{
-    $buyerId = (int)readline('Please choose a buyer: ');
-    $buyer = $personCollection->getPersonById($buyerId);
-    if ($buyer !== null) {
-        $productId = (int)readline('Please choose a product: ');
-        $product = $shop->checkProduct($productId);
-        if ($product !== null && $buyer->getBudget() > $product->getPrice()) {
-            $product->removeCount();
-            $buyer->removeMoney($product->getPrice());
-            $buyer->addProduct($product->getName());
-
-            $personStorage->savePersons('persons.txt', $buyer);
-            $productStorage->saveProducts('products.txt', $product);
-        } elseif($product !== null && $buyer->getBudget() < $product->getPrice()) {
-            echo 'Sorry you dont have enough money' . PHP_EOL;
-        } else {
-            echo 'There is no product with such ID or product are temporary out of stock' . PHP_EOL;
-        }
-    } else {
-        echo 'There is no buyer with such ID' . PHP_EOL;
-    }
-}
 
 while (true) {
     DrawInformation::drawMenu();
 
-    $menu = (int)readline('Choose what you want to do: ');
+    $menu = (int)readline('Choose what you want to do [1-4]: ');
 
     switch ($menu) {
         case 1:
@@ -53,9 +33,8 @@ while (true) {
             DrawInformation::drawPersons($personCollection);
             break;
         case 3:
-            DrawInformation::drawPersons($personCollection);
-            echo PHP_EOL;
-            shopping($personCollection, $personStorage, $shop, $productStorage);
+            $shopping = new Shopping($shop, $productStorage, $personCollection, $personStorage);
+            $shopping->buyProduct();
             break;
         case 4:
             echo PHP_EOL . 'Exit' . PHP_EOL;

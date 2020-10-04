@@ -1,6 +1,5 @@
 <?php
 
-
 class PersonCollection
 {
     private array $persons = [];
@@ -12,12 +11,12 @@ class PersonCollection
         }
     }
 
-    public function addPerson(Person $person)
+    public function addPerson(Person $person): void
     {
         $this->persons[] = $person;
     }
 
-    public function getAllPersons()
+    public function getAllPersons(): array
     {
         return $this->persons;
     }
@@ -26,7 +25,6 @@ class PersonCollection
     {
         foreach ($this->getAllPersons() as $person) {
             if ($person->getId() === $id) {
-
                 return $person;
             }
         }

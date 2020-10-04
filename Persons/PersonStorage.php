@@ -21,6 +21,7 @@ class PersonStorage
     {
         $fileContent = file_get_contents($this->path);
         $rows = array_filter((array)explode('/', $fileContent));
+
         $persons = [];
 
         foreach ($rows as $row) {
@@ -33,13 +34,12 @@ class PersonStorage
                 (array)$personProductData
             );
         }
-
         return $persons;
     }
 
-    public function savePersons(string $path, Person $personToSave)
+    public function savePersons(Person $personToSave): void
     {
-        $fileContent = file($path);
+        $fileContent = file($this->path);
         $lastRow = count($fileContent) - 1;
 
         $line = array_search($personToSave->getId(), $fileContent);
@@ -50,6 +50,6 @@ class PersonStorage
 
         $fileContent[$lastRow] = str_replace(PHP_EOL, '', $fileContent[$lastRow]);
 
-        file_put_contents($path, $fileContent);
+        file_put_contents($this->path, $fileContent);
     }
 }
