@@ -12,7 +12,7 @@ class PersonFormatter
         return '$' . number_format($budget / 100, 2, ',', '.');
     }
 
-    public static function productsFormatter(array $products)
+    public static function productsFormatter(array $products): void
     {
         foreach ($products as $product) {
             echo $product . ' | ';

@@ -4,7 +4,6 @@ class DrawInformation
 {
     public static function drawMenu(): void
     {
-        echo PHP_EOL;
         echo '1. See the products' . PHP_EOL;
         echo '2. See the buyers' . PHP_EOL;
         echo '3. Go shopping' . PHP_EOL;
@@ -23,6 +22,7 @@ class DrawInformation
             echo ProductFormatter::countFormatter($product->getCount());
             echo PHP_EOL;
         }
+        echo PHP_EOL;
     }
 
     public static function drawPersons(PersonCollection $personCollection): void
@@ -37,5 +37,6 @@ class DrawInformation
             PersonFormatter::productsFormatter($person->getProducts());
             echo PHP_EOL;
         }
+        echo PHP_EOL;
     }
 }

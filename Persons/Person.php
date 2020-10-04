@@ -40,13 +40,6 @@ class Person
         return $this->products;
     }
 
-    public function getProduct(): void
-    {
-        foreach ($this->products as $product) {
-            echo $product;
-        }
-    }
-
     public function removeMoney(int $amount): void
     {
         $this->budget -= $amount;

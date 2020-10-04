@@ -15,12 +15,12 @@ class Shop
         }
     }
 
-    public function addProduct(Product $product)
+    public function addProduct(Product $product): void
     {
         $this->products[] = $product;
     }
 
-    public function getAllProducts()
+    public function getAllProducts(): array
     {
         return $this->products;
     }
@@ -29,17 +29,18 @@ class Shop
     {
         foreach ($this->getAllProducts() as $product) {
             if ($product->getId() === $id) {
-
                 return $product;
             }
         }
         return null;
     }
 
-    public function checkProduct(int $id): ?Product
+    public function checkProductCount(int $id): ?Product
     {
-        if ($this->getProductById($id)->getCount() > 0) {
-            return $this->getProductById($id);
+        if ($this->getProductById($id) !== null) {
+            if ($this->getProductById($id)->getCount() > 0) {
+                return $this->getProductById($id);
+            }
         }
         return null;
     }
