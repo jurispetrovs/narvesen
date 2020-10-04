@@ -1,0 +1,5 @@
+1;Water 0.5L;47;0/
+2;Coffee (Ice Latte) 0.5L;220;25/
+3;Hot dog;150;33/
+4;Snickers 50g;69;81/
+5;Sandwich with chicken;174;7/
